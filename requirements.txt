@@ -39,3 +39,7 @@ jinja2
 psycopg2-binary
 scikit-learn
 Wikipedia
+
+# === Agentic RAG ===
+unstructured
+unstructured[pdf]

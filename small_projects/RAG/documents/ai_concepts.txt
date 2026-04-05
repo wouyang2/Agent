@@ -1,0 +1,80 @@
+INTRODUCTION TO ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING
+=============================================================
+
+What is Artificial Intelligence?
+---------------------------------
+Artificial Intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think, learn, and problem-solve. AI systems can perform tasks that typically require human intelligence, such as visual perception, speech recognition, decision-making, and language translation.
+
+AI can be broadly categorized into two types:
+- Narrow AI (Weak AI): Designed to perform a specific task, such as facial recognition or playing chess.
+- General AI (Strong AI): A theoretical form of AI that can perform any intellectual task that a human can do.
+
+What is Machine Learning?
+--------------------------
+Machine Learning (ML) is a subset of AI that enables systems to automatically learn and improve from experience without being explicitly programmed. Instead of following pre-written rules, ML algorithms build models based on sample data — known as training data — to make predictions or decisions.
+
+There are three main types of machine learning:
+1. Supervised Learning: The model is trained on labeled data, meaning each training example has an input and a known output. Common use cases include spam detection and image classification.
+2. Unsupervised Learning: The model is trained on unlabeled data and must find patterns and relationships on its own. Common use cases include clustering and anomaly detection.
+3. Reinforcement Learning: The model learns by interacting with an environment and receiving feedback in the form of rewards or penalties. Common use cases include game playing and robotics.
+
+What is Deep Learning?
+-----------------------
+Deep Learning is a subset of machine learning that uses neural networks with many layers (hence "deep") to analyze various factors of data. Deep learning models excel at recognizing patterns in unstructured data such as images, audio, and text.
+
+Key components of deep learning:
+- Neural Networks: Computing systems inspired by the human brain, consisting of interconnected nodes (neurons) organized in layers.
+- Layers: Input layer, hidden layers, and output layer. The more hidden layers, the "deeper" the network.
+- Backpropagation: An algorithm used to train neural networks by adjusting weights based on the error in the output.
+
+What are Large Language Models (LLMs)?
+---------------------------------------
+Large Language Models (LLMs) are a type of deep learning model trained on massive amounts of text data. They are designed to understand and generate human language. LLMs power tools like ChatGPT, Claude, and Gemini.
+
+Key characteristics of LLMs:
+- They are trained on billions of parameters.
+- They use a transformer architecture, which allows them to understand context over long sequences of text.
+- They can perform a wide variety of tasks including summarization, translation, question answering, and code generation.
+- They are "few-shot" learners, meaning they can generalize to new tasks with very few examples.
+
+What is a Transformer?
+------------------------
+The Transformer is a deep learning architecture introduced in the 2017 paper "Attention is All You Need." It revolutionized natural language processing by replacing recurrent neural networks (RNNs) with a mechanism called self-attention.
+
+Self-attention allows the model to weigh the importance of different words in a sentence relative to each other, enabling it to capture long-range dependencies efficiently. This makes transformers much faster to train than RNNs while achieving better performance.
+
+What is Retrieval-Augmented Generation (RAG)?
+-----------------------------------------------
+Retrieval-Augmented Generation (RAG) is a technique that enhances LLMs by giving them access to external knowledge sources at inference time. Instead of relying solely on information encoded in the model's parameters during training, RAG retrieves relevant documents from a knowledge base and uses them as additional context when generating a response.
+
+How RAG works:
+1. The user submits a query.
+2. The query is embedded into a vector representation.
+3. The vector database is searched for the most semantically similar documents.
+4. The retrieved documents are injected into the LLM's prompt as context.
+5. The LLM generates a response grounded in the retrieved information.
+
+Benefits of RAG:
+- Reduces hallucinations by grounding responses in factual documents.
+- Allows the model to access up-to-date information beyond its training cutoff.
+- More cost-effective than fine-tuning for knowledge updates.
+
+What is a Vector Database?
+----------------------------
+A vector database is a type of database that stores data as high-dimensional vectors (numerical representations of data). It is optimized for similarity search, meaning it can quickly find the most similar vectors to a given query vector.
+
+Vector databases are a core component of RAG systems. Popular vector databases include:
+- ChromaDB: Open-source, runs locally, great for development.
+- Pinecone: Managed cloud service, scalable for production.
+- Weaviate: Open-source with a rich feature set.
+- FAISS: Facebook AI's library for efficient similarity search.
+
+What is Prompt Engineering?
+-----------------------------
+Prompt engineering is the practice of designing and optimizing prompts (instructions given to an LLM) to achieve desired outputs. Since LLMs are highly sensitive to how they are prompted, well-crafted prompts can significantly improve the quality and relevance of responses.
+
+Common prompt engineering techniques:
+- Zero-shot prompting: Asking the model to perform a task without any examples.
+- Few-shot prompting: Providing a few examples of the desired behavior before asking the model to perform the task.
+- Chain-of-thought prompting: Asking the model to reason step by step before giving a final answer.
+- System prompts: Setting a persona or context for the model at the beginning of a conversation.
