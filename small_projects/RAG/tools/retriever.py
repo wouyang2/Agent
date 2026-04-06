@@ -1,20 +1,22 @@
+from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
-import chromadb
 
 from dotenv import load_dotenv
 load_dotenv()
 
-def retrieve(query: str, n_result: int = 4):
+def retriever():
 
-    client = chromadb.PersistentClient('./chromaDB')
-    collections = client.get_or_create_collection(name='knowledge_base')
+    vectorstore = Chroma(
+        persist_directory="./chromaDB",
+        collection_name="knowledge_base",
+        embedding_function= OpenAIEmbeddings(model = 'text-embedding-3-small')
+    )
 
-    embedding_model = OpenAIEmbeddings(model = 'text-embedding-3-small')
-    query_embedding = embedding_model.embed_query(query)
+    # print("check: ",vectorstore._collection.count())
 
-    results = collections.query(query_embedding, n_results=n_result)
+    return vectorstore.as_retriever(search_kwargs = {'k': 3})
 
-    return results
+
 
 
 

@@ -1,11 +1,39 @@
 from dotenv import load_dotenv
-from tools.retriever import retrieve
-from langchain_community.chat_message_histories import ChatMessageHistory
-from langchain_classic.chains import create_history_aware_retriever, create_retrieval_chain
-import aisuite
+from tools.retriever import retriever
 
-chat_history = ChatMessageHistory()
-CLIENT = aisuite.Client()
+from langchain_classic.chains import create_history_aware_retriever, create_retrieval_chain
+from langchain_core.prompts import MessagesPlaceholder, ChatPromptTemplate
+from langchain_classic.chains.combine_documents import create_stuff_documents_chain
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, AIMessage
+
+load_dotenv()
+
+llm = ChatOpenAI()
+retriever = retriever()
+
+contextualized_prompt = ChatPromptTemplate.from_messages([
+    ('system', """Given the chat history and the lastest user asked question, 
+    generate a standalone question that can be understood without the need of history. 
+    DO NOT answer the question, just rewrite it. If the question itself is already standalone, then return the question directly"""),
+    MessagesPlaceholder(variable_name='chat_history'),
+    ('human', '{input}')
+])
+
+qa_prompt = ChatPromptTemplate.from_messages([
+    ('system', """You are a knowledge base bot that can answer question using only the context provided.
+    IF the relevant context is not provided, just say I do not know.
+    
+    Context: {context}"""),
+    MessagesPlaceholder(variable_name='chat_history'),
+    ('human', '{input}')
+])
+
+history_aware_retriever = create_history_aware_retriever(llm, retriever, contextualized_prompt)
+combine_docs_chain = create_stuff_documents_chain(llm, qa_prompt)
+rag_chain = create_retrieval_chain(history_aware_retriever,combine_docs_chain)
+
+chat_history = []
 
 while True:
     query = input('Enter query: ')
@@ -13,17 +41,10 @@ while True:
     if query.lower() in ['exit', 'quit']:
         break
 
-    # history.add_user_message(query)
+    response = rag_chain.invoke({'input': query , 'chat_history': chat_history})
 
-    raged_query = retrieve(query)  # Retrieve relevant chunk for ChromaBD
-    context = '\n\n'.join(raged_query)
+    print('AI response: ', response['answer'])
 
-    response = CLIENT.chat.completions.create(
-        model='openai:gpt-4o-mini',
-        messages=[{'role': 'system', 'content': 'Answer using only the context provided.'},
-                  {'role': 'user', 'content': f"Context:\n{context}\n\nQuestion: {query}"}],
-    )
+    chat_history.extend([HumanMessage(content=query), AIMessage(content= response['answer'])])
 
-    print(response.choices[0].message.content)
 
-    # history.add_ai_message(response.choices[0].message)
