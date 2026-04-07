@@ -6,6 +6,7 @@ from langchain_core.prompts import MessagesPlaceholder, ChatPromptTemplate
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage
+from langchain_classic.memory import ConversationSummaryBufferMemory
 
 load_dotenv()
 
@@ -33,7 +34,21 @@ history_aware_retriever = create_history_aware_retriever(llm, retriever, context
 combine_docs_chain = create_stuff_documents_chain(llm, qa_prompt)
 rag_chain = create_retrieval_chain(history_aware_retriever,combine_docs_chain)
 
-chat_history = []
+# chat_history = []
+
+chat_history = ConversationSummaryBufferMemory(llm = llm, max_token_limit=500, return_messages=True)
+
+# while True:
+#     query = input('Enter query: ')
+#
+#     if query.lower() in ['exit', 'quit']:
+#         break
+#
+#     response = rag_chain.invoke({'input': query , 'chat_history': chat_history})
+#
+#     print('AI response: ', response['answer'])
+#
+#     chat_history.extend([HumanMessage(content=query), AIMessage(content= response['answer'])])
 
 while True:
     query = input('Enter query: ')
@@ -41,10 +56,10 @@ while True:
     if query.lower() in ['exit', 'quit']:
         break
 
-    response = rag_chain.invoke({'input': query , 'chat_history': chat_history})
+    response = rag_chain.invoke({'input': query , 'chat_history': chat_history.load_memory_variables({})['history']})
 
     print('AI response: ', response['answer'])
 
-    chat_history.extend([HumanMessage(content=query), AIMessage(content= response['answer'])])
+    chat_history.save_context({'input' : query}, {'output' : response['answer']})
 
 
