@@ -25,4 +25,8 @@ class FinanceSystemState:
     needs_report: bool = dataclasses.field(default=False)
     final_response: Optional[str] = dataclasses.field(default=None)
 
+    revision_count : int = 0
+    needs_revision: bool = dataclasses.field(default=False)
+    revision_feedback : Annotated[dict, merge_dict]= dataclasses.field(default_factory=dict)    # key to be the agent, value would be the str of revision suggestion
+
 

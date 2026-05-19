@@ -234,5 +234,6 @@ def memory_manager_node(state: FinanceSystemState):
         'agent_outputs': {},
         'final_response': None,
         'needs_report': False,
-        'active_agents': []
+        'active_agents': [],
+        'revision_count': 0
     }

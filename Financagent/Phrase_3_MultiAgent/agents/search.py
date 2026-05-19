@@ -30,7 +30,23 @@ agent = create_agent(model = llm,
 
 def search_node(state: FinanceSystemState):
 
-    response = agent.invoke({'messages': state.messages})
+    feedback = state.revision_feedback
+    revision_context = ""
+
+    if state.needs_revision:
+        revision_context = f"""
+                    REVISION REQUESTED:
+                    Your previous response was inadequate. Specific feedback:
+                    {feedback}
+                    Previous response: {state.agent_outputs.get('analyst', '')}
+                    Please address all issues in your new response.
+                    """
+
+    messages = list(state.messages)
+    if revision_context:
+        messages.append(revision_context)
+
+    response = agent.invoke({'messages': messages})
 
     new_message = response['messages'][len(state.messages):]
 

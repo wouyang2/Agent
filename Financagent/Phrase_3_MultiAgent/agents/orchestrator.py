@@ -130,6 +130,13 @@ def route_after_agents(state: FinanceSystemState) -> str:
     else:
         return 'orchestrator_synthesis'
 
+def route_after_critic(state: FinanceSystemState):
+    if state.needs_revision and state.revision_count < 3:
+        return 'retry'
+    if state.needs_report:
+        return 'report_writer'
+    else:
+        return 'orchestrator_synthesis'
 
 
 if __name__ == "__main__":
