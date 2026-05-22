@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 import sys
 from pathlib import Path
-curr_dir = Path.cwd()
+curr_dir = Path(__file__).parent.parent
 base_dir = curr_dir.parent.parent
 sys.path.insert(0, str(base_dir))
 
@@ -78,13 +78,13 @@ def critic_node(state: FinanceSystemState):
     needs_revision = False
 
     if decision.analyst and decision.analyst.score < 4:
-        feedback_dict['analyst'] = {'feedback': decision.analyst.feedback, 'issue': decision.analyst.issue}
+        feedback_dict['analyst'] = {'score': decision.analyst.score,'feedback': decision.analyst.feedback, 'issue': decision.analyst.issue}
         needs_revision = True
     if decision.search and decision.search.score < 4:
-        feedback_dict['search'] = {'feedback':decision.search.feedback, 'issue':decision.search.issue}
+        feedback_dict['search'] = {'score': decision.search.score,'feedback':decision.search.feedback, 'issue':decision.search.issue}
         needs_revision = True
     if decision.anomaly and decision.anomaly.score < 4:
-        feedback_dict['anomaly'] = {'feedback': decision.anomaly.feedback, 'issue': decision.anomaly.issue}
+        feedback_dict['anomaly'] = {'score': decision.anomaly.score,'feedback': decision.anomaly.feedback, 'issue': decision.anomaly.issue}
         needs_revision = True
 
     # For Debugging

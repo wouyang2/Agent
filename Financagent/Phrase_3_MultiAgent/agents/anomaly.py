@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-curr_dir = Path.cwd()
+curr_dir = Path(__file__).parent.parent
 base_dir = curr_dir.parent.parent
 sys.path.insert(0, str(base_dir))
 

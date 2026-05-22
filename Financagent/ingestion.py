@@ -15,7 +15,8 @@ class CategorizedTransaction(BaseModel):
 class TransactionCategory(BaseModel):
     items: List[CategorizedTransaction]
 
-CATEGORIES = ["Food & Dining", "Groceries", "Gas", "Subscription", "Entertainment", "Technology", "Alcohol", "Smoke", "Payment", "Shopping", "Transportation", "Shipping", "Charity"]
+CATEGORIES = ["Food & Dining", "Groceries", "Gas", "Subscription", "Entertainment", "Technology", "Alcohol", "Smoke", "Payment", "Shopping", "Transportation", "Shipping",
+              "Charity", "Travel & Hotel", "Medical & Health", "Insurance", "Automotive", "Education", "Personal Care", "Utilities & Bills", "Bank & Finance", "Other",]
 
 llm = ChatOpenAI(model = 'gpt-4o-mini')
 
@@ -55,8 +56,14 @@ def categorize_batch(descriptions, model):
                     - No compound labels, no slashes, no extra text, no markdown
                     - If unsure, use "Other"
                 
-                    EXAMPLE (for 2 descriptions):
+                    FORMATING EXAMPLE (for 2 descriptions):
                     ["TEXAS ROAD HOUSE" : "Food & Dining", "KROGER": "Groceries"]
+                    
+                    CATEGORIZED EXAMPLES:
+                    - Travel & Hotel: hotels, motels, Hilton, Marriott, Airbnb, flights, airlines
+                    - Automotive: car dealers, Toyota, Honda, auto repair, oil change, parking
+                    - Bank & Finance: ACH payment, wire transfer, bank fee, online payment
+                    - Medical & Health: pharmacy, CVS, Walgreens, doctor, clinic, hospital
                 
                     DESCRIPTIONS:
                     {descriptions_number_list}
@@ -107,7 +114,7 @@ def run_ingestion(input_path, output_path):
     data.to_csv(output_path, index=False)
 
     print("Data Shape: ",data.shape)
-    print(data.head())
+    print(data['CATEGORY'].unique())
 
 
 if __name__ == '__main__':

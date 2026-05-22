@@ -1,4 +1,8 @@
-from graph import app
+import sys
+from pathlib import Path
+curr_dir = Path(__file__).parent
+sys.path.insert(0, str(curr_dir))
+from .graph import app
 from langchain_core.messages import HumanMessage
 from dotenv import load_dotenv
 import uuid
@@ -27,23 +31,30 @@ def run(user_input: str, thread_id: str):
         config = config
     )
 
-    return response.get('final_response') or response['messages'][-1].content
+    return {
+        'response' : response.get('final_response') or response['messages'][-1].content,
+        'routed_to': response.get('active_agents', []),
+        'critic_scores': response.get('revision_feedback', {}),
+        'revision_count': response.get('revision_count', 0),
+        'needs_revision': response.get('needs_revision', False),
+        'tool_history': response.get('tool_history', [])[-3:],
+    }
 
 
-if __name__ == "__main__":
-    thread_id = str(uuid.uuid4())
-    print("Personal Finance Agent — Multi-Agent System")
-    print("Type 'exit' or 'quit' to end\n")
-
-    while True:
-        user_input = input("Ask: ").strip()
-
-        if not user_input:
-            continue
-
-        if user_input.lower() in ["exit", "quit"]:
-            print("Goodbye!")
-            break
-
-        response = run(user_input, thread_id)
-        print(f"\nAgent: {response}\n")
+# if __name__ == "__main__":
+#     thread_id = str(uuid.uuid4())
+#     print("Personal Finance Agent — Multi-Agent System")
+#     print("Type 'exit' or 'quit' to end\n")
+#
+#     while True:
+#         user_input = input("Ask: ").strip()
+#
+#         if not user_input:
+#             continue
+#
+#         if user_input.lower() in ["exit", "quit"]:
+#             print("Goodbye!")
+#             break
+#
+#         response = run(user_input, thread_id)
+#         print(f"\nAgent: {response}\n")

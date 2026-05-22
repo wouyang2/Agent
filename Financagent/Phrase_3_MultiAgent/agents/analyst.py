@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-curr_dir = Path.cwd()
+curr_dir = Path(__file__).parent.parent
 base_dir = curr_dir.parent.parent
 sys.path.insert(0, str(base_dir))
 
@@ -10,6 +10,7 @@ from Financagent.Phrase_3_MultiAgent.core.tools import get_monthly_spending_summ
 from Financagent.Phrase_3_MultiAgent.core.memory_manager import update_tool_history
 from langchain.agents import create_agent
 
+from datetime import datetime as dt
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -23,6 +24,8 @@ agent = create_agent(model = llm,
                                     Use get_monthly_comparison for trend questions.
                                     Always present amounts as positive with $ sign.
                                     Never fabricate data — if a tool returns no results, say so clearly.
+                                    
+                                    CURRENT TIME FOR REFERENCE: {dt.now()}
                                 """
 
                      )

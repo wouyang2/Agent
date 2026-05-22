@@ -1,6 +1,6 @@
 from pathlib import Path
 import sys
-curr_dir = Path.cwd()
+curr_dir = Path(__file__).parent.parent
 base_dir = curr_dir.parent.parent
 sys.path.insert(0, str(base_dir))
 from Financagent.Phrase_3_MultiAgent.core.tools import get_full_annual_report
