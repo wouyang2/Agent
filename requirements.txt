@@ -1,7 +1,7 @@
 streamlit
 langchain==1.2.16
 langchain-openai==1.2.1
-langchain-chroma==0.1.4
+langchain-chroma==0.2.2
 langchain-community
 langgraph
 openai
