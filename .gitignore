@@ -223,3 +223,8 @@ learn/
 
 # .DS_Store
 .DS_Store
+
+# Test Data
+Financagent/Phrase_3_MultiAgent/chroma_db/
+Financagent/Phrase_3_MultiAgent/data/raw/
+Financagent/Phrase_3_MultiAgent/data/processed/categorized_data.csv

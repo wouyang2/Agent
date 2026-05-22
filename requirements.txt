@@ -43,3 +43,23 @@ Wikipedia
 # === Agentic RAG ===
 unstructured
 unstructured[pdf]
+
+# ==== Personal Development ====
+langchain==1.2.16
+langchain-openai==1.2.1
+pandas==3.0.2
+python-dotenv
+chromadb==1.5.7
+ast
+streamlit
+streamlit
+langchain
+langchain-openai
+langchain-chroma
+langgraph
+openai
+pandas
+plotly
+chromadb
+python-dotenv
+pydantic

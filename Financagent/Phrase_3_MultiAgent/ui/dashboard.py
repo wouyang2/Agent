@@ -8,7 +8,6 @@ from pathlib import Path
 
 from nltk.ccg import chart
 
-
 @st.cache_data
 def load_data():
 

@@ -1,8 +1,15 @@
 import streamlit as st
 import sys
+import time
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from Financagent.Phrase_3_MultiAgent.main import run
+from Financagent.Phrase_3_MultiAgent.main import stream_agent
+
+def response_generator(text: str):
+    """Convert full text into a streaming generator."""
+    for word in text.split(" "):
+        yield word + " "
+        time.sleep(0.03)  # slight delay for effect
 
 def render_trace(trace):
     """Renders the agent reasoning path inside the expander. """
@@ -62,13 +69,9 @@ def render_chat():
 
         with st.chat_message('assistant'):
             with st.spinner('Thinking...'):
-                try:
-                    result = run(user_input, st.session_state.thread_id)
-                except Exception as e:
-                    st.error(f"Agent encountered an error: {str(e)}")
-                    st.stop()
+                result = stream_agent(user_input, st.session_state.thread_id)
 
-            st.markdown(result['response'])
+            st.write_stream(response_generator(result['response']))
 
             # Showing reasoning path if needed
             if st.session_state.show_traces and result:

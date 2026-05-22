@@ -5,3 +5,14 @@ python-dotenv
 chromadb==1.5.7
 ast
 streamlit
+streamlit
+langchain
+langchain-openai
+langchain-chroma
+langgraph
+openai
+pandas
+plotly
+chromadb
+python-dotenv
+pydantic

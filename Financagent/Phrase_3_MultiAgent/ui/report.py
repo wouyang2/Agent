@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-from Financagent.Phrase_3_MultiAgent.main import run
+from Financagent.Phrase_3_MultiAgent.main import stream_agent
 import uuid
 import pandas as pd
 
@@ -31,7 +31,7 @@ def render_report():
 
     with col2:
         st.write("")
-        generate = st.button('🚀 Generate Report', width=True)
+        generate = st.button('🚀 Generate Report', width='stretch')
 
     # Generate Report and Display
     if generate:

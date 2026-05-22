@@ -41,6 +41,47 @@ def run(user_input: str, thread_id: str):
     }
 
 
+def stream_agent(user_input: str, thread_id: str):
+    """Generator that yields response text chunks."""
+    config = {"configurable": {"thread_id": thread_id}}
+
+    final_state = None
+    for chunk in app.stream(
+            {
+                "messages": [HumanMessage(user_input)],
+                "entities": {},
+                "tool_history": [],
+                "current_year": None,
+                "current_month": None,
+                "current_category": None,
+                "last_question_type": None,
+                "summary": None,
+                "agent_outputs": {},
+                "routing_decision": [],
+                "active_agents": [],
+                "needs_report": False,
+                "final_response": None,
+                "needs_revision": False,
+                "revision_count": 0,
+                "revision_feedback": {},
+            },
+            config=config,
+            stream_mode="values"
+    ):
+        final_state = chunk
+
+    # Extract final response
+    final_response = final_state.get('final_response') or final_state['messages'][-1].content
+
+    return {
+        'response': final_response,
+        'routed_to': final_state.get('active_agents', []),
+        'revision_count': final_state.get('revision_count', 0),
+        'needs_revision': final_state.get('needs_revision', False),
+        'tool_history': final_state.get('tool_history', [])[-3:],
+    }
+
+
 # if __name__ == "__main__":
 #     thread_id = str(uuid.uuid4())
 #     print("Personal Finance Agent — Multi-Agent System")
