@@ -12,5 +12,4 @@ python-dotenv
 pydantic
 tavily-python
 requests
-protobuf==3.20.3
-python-3.11
+protobuf>=3.20.0,<4.0.0
