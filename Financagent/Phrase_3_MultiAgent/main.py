@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 curr_dir = Path(__file__).parent
 sys.path.insert(0, str(curr_dir))
-from .graph import app
+from graph import app
 from langchain_core.messages import HumanMessage
 from dotenv import load_dotenv
 import uuid
