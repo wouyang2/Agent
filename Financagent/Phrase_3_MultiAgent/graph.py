@@ -19,8 +19,6 @@ def retry_node(state: FinanceSystemState):
 
 memory_saver = MemorySaver()
 
-from IPython.display import Image, display
-
 graph = StateGraph(FinanceSystemState)
 
 graph.add_node('analyst', analyst.analyst_node)
@@ -55,6 +53,8 @@ graph.add_edge('orchestrator_synthesis', END)
 graph.add_edge('report_writer', END)
 
 app = graph.compile(checkpointer=memory_saver)
+
+# from IPython.display import Image, display
 
 # graph_image = app.get_graph().draw_mermaid_png()
 #
