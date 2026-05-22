@@ -1,11 +1,12 @@
 streamlit
 langchain==1.2.16
 langchain-openai==1.2.1
-langchain-chroma
+langchain-chroma==0.1.4
 langchain-community
 langgraph
 openai
-chromadb==0.4.24
+chromadb==0.5.23
+numpy==1.26.4
 pandas
 plotly
 python-dotenv
